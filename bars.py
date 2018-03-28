@@ -8,6 +8,13 @@ def load_data(filepath):
 
 
 def get_biggest_bar(data):
+    seats = []
+    for feature in data['features']:
+        seats.append(feature['properties']['Attributes']['SeatsCount'])
+    max_seats = max(seats)
+    for feature in data['features']:
+        if feature['properties']['Attributes']['SeatsCount'] == max_seats:
+            print("The biggest bar is: {name}, seats: {seats}".format(name=feature['properties']['Attributes']['Name'], seats=max_seats))
     pass
 
 
@@ -21,6 +28,7 @@ def get_closest_bar(data, longitude, latitude):
 
 def main():
     data = load_data('bars.json')
+    get_biggest_bar(data)
 
 
 if __name__ == '__main__':
