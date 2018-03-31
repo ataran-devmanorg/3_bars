@@ -1,5 +1,6 @@
 import json
 from geopy import distance
+import click
 
 
 def load_data(filepath):
@@ -30,16 +31,23 @@ def get_closest_bar(data, longitude, latitude):
         lat = feature['geometry']['coordinates'][0]
         dist = round(distance.vincenty((longitude, latitude), (long, lat)).km, 2)
         bars.append((feature['properties']['Attributes']['Name'], dist))
-        # print(feature['properties']['Attributes']['Name'], dist)
     closest_bar = min(bars, key=lambda t: t[1])
-    print('The closest bar is: {name}, distance: {distance} km.'.format(name=closest_bar[0], distance=closest_bar[1]))
+    print('The closest bar to your location: ({longitude}, {latitude}) is: {name}, distance: {distance} km.'.format(
+        longitude=longitude, latitude=latitude, name=closest_bar[0], distance=closest_bar[1]))
 
 
-def main():
-    data = load_data('bars.json')
+@click.command()
+@click.option('--file', '-f', default='bars.json', help='Json file with bars info.')
+@click.option('--coordinates', '-c', default='0.0,0.0', help='Your coordinates.')
+def main(file, coordinates):
+    data = load_data(file)
+
     get_biggest_bar(data)
     get_smallest_bar(data)
-    get_closest_bar(data, 0.0, 0.0)
+
+    longitude = float(coordinates.split(',')[0])
+    latitude = float(coordinates.split(',')[1])
+    get_closest_bar(data, longitude, latitude)
 
 
 if __name__ == '__main__':
