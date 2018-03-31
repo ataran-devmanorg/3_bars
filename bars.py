@@ -5,29 +5,22 @@ from geopy import distance
 def load_data(filepath):
     with open(filepath, 'r') as file_handler:
         return json.load(file_handler)
-    pass
 
 
 def get_biggest_bar(data):
     seats = []
     for feature in data['features']:
-        seats.append(feature['properties']['Attributes']['SeatsCount'])
-    max_seats = max(seats)
-    for feature in data['features']:
-        if feature['properties']['Attributes']['SeatsCount'] == max_seats:
-            print("The biggest bar is: {name}, seats: {seats}".format(name=feature['properties']['Attributes']['Name'], seats=max_seats))
-    pass
+        seats.append((feature['properties']['Attributes']['Name'], feature['properties']['Attributes']['SeatsCount']))
+    max_seats = max(seats, key=lambda t: t[1])
+    print("The biggest bar is: {name}, seats: {seats}.".format(name=max_seats[0], seats=max_seats[1]))
 
 
 def get_smallest_bar(data):
     seats = []
     for feature in data['features']:
-        seats.append(feature['properties']['Attributes']['SeatsCount'])
-    min_seats = min(seats)
-    for feature in data['features']:
-        if feature['properties']['Attributes']['SeatsCount'] == min_seats:
-            print("The smallest bar is: {name}, seats: {seats}".format(name=feature['properties']['Attributes']['Name'], seats=min_seats))
-    pass
+        seats.append((feature['properties']['Attributes']['Name'], feature['properties']['Attributes']['SeatsCount']))
+    min_seats = min(seats, key=lambda t: t[1])
+    print("The smallest bar is: {name}, seats: {seats}.".format(name=min_seats[0], seats=min_seats[1]))
 
 
 def get_closest_bar(data, longitude, latitude):
@@ -39,8 +32,7 @@ def get_closest_bar(data, longitude, latitude):
         bars.append((feature['properties']['Attributes']['Name'], dist))
         # print(feature['properties']['Attributes']['Name'], dist)
     closest_bar = min(bars, key=lambda t: t[1])
-    print(closest_bar)
-    pass
+    print('The closest bar is: {name}, distance: {distance} km.'.format(name=closest_bar[0], distance=closest_bar[1]))
 
 
 def main():
@@ -52,4 +44,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    pass
