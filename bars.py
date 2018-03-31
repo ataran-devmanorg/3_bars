@@ -11,12 +11,9 @@ def load_data(filepath):
 def get_biggest_bar(data):
     seats = []
     for feature in data['features']:
-        seats.append(feature['properties']['Attributes']['SeatsCount'])
-    max_seats = max(seats)
-    for feature in data['features']:
-        if feature['properties']['Attributes']['SeatsCount'] == max_seats:
-            print("The biggest bar is: {name}, seats: {seats}".format(name=feature['properties']['Attributes']['Name'], seats=max_seats))
-    pass
+        seats.append((feature['properties']['Attributes']['Name'], feature['properties']['Attributes']['SeatsCount']))
+    max_seats = max(seats, key=lambda t: t[1])
+    print("The biggest bar is: {name}, seats: {seats}.".format(name=max_seats[0], seats=max_seats[1]))
 
 
 def get_smallest_bar(data):
