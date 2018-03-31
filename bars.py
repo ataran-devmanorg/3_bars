@@ -31,7 +31,6 @@ def get_closest_bar(data, longitude, latitude):
         lat = feature['geometry']['coordinates'][0]
         dist = round(distance.vincenty((longitude, latitude), (long, lat)).km, 2)
         bars.append((feature['properties']['Attributes']['Name'], dist))
-        # print(feature['properties']['Attributes']['Name'], dist)
     closest_bar = min(bars, key=lambda t: t[1])
     print('The closest bar to your location: ({longitude}, {latitude}) is: {name}, distance: {distance} km.'.format(
         longitude=longitude, latitude=latitude, name=closest_bar[0], distance=closest_bar[1]))
