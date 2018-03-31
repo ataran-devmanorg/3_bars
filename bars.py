@@ -33,8 +33,8 @@ def get_closest_bar(data, longitude, latitude):
         bars.append((feature['properties']['Attributes']['Name'], dist))
         # print(feature['properties']['Attributes']['Name'], dist)
     closest_bar = min(bars, key=lambda t: t[1])
-    print(closest_bar)
     pass
+    print('The closest bar is: {name}, distance: {distance} km.'.format(name=closest_bar[0], distance=closest_bar[1]))
 
 
 def main():
