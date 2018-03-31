@@ -5,7 +5,6 @@ from geopy import distance
 def load_data(filepath):
     with open(filepath, 'r') as file_handler:
         return json.load(file_handler)
-    pass
 
 
 def get_biggest_bar(data):
@@ -33,7 +32,6 @@ def get_closest_bar(data, longitude, latitude):
         bars.append((feature['properties']['Attributes']['Name'], dist))
         # print(feature['properties']['Attributes']['Name'], dist)
     closest_bar = min(bars, key=lambda t: t[1])
-    pass
     print('The closest bar is: {name}, distance: {distance} km.'.format(name=closest_bar[0], distance=closest_bar[1]))
 
 
@@ -46,4 +44,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    pass
